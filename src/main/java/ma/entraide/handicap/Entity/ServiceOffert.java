@@ -1,9 +1,12 @@
 package ma.entraide.handicap.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -16,4 +19,8 @@ public class ServiceOffert {
     private Long id;
 
     private String serviceName;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "services")
+    List<Beneficiaire> beneficiaire;
 }

@@ -1,5 +1,6 @@
 package ma.entraide.handicap.Service;
 
+import jakarta.transaction.Transactional;
 import ma.entraide.handicap.Entity.*;
 import ma.entraide.handicap.Repository.BeneficiaireRepo;
 import ma.entraide.handicap.Repository.ProvinceRepo;
@@ -114,9 +115,17 @@ public class BeneficiaireService {
         return beneficiaireRepo.save(beneficiaire);
     }
 
+    @Transactional
     public String deleteBeneficiaire(Long id) {
         Beneficiaire beneficiaire = getBeneficiaireById(id);
-        beneficiaire.setServices(null);
+        // Remove beneficiary from associated services
+        if (beneficiaire.getServices() != null) {
+            for (ServiceOffert serviceOffert : beneficiaire.getServices()) {
+                serviceOffert.getBeneficiaire().clear();
+            }
+        }
+        beneficiaire.getServices().clear();
+
         beneficiaire.setEtablissement(null);
         beneficiaire.setProvince(null);
         beneficiaire.setTypeHandicap(null);

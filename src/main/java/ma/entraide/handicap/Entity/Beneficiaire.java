@@ -31,7 +31,7 @@ public class Beneficiaire {
 
     private String fullName;
 
-    private int age;
+    private String age;
 
     private String sexe;
 
@@ -45,8 +45,16 @@ public class Beneficiaire {
     @JoinColumn(name = "etablissement_id")
     private Etablissement etablissement;
 
-    @OneToMany(cascade = CascadeType.DETACH)
-    //@JoinColumn(name = "service_id")
+    @ManyToMany(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    })
+    @JoinTable(
+            name = "benef_service",
+            joinColumns = @JoinColumn(name = "beneficiaire_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id"))
     private List<ServiceOffert> services;
 
 
