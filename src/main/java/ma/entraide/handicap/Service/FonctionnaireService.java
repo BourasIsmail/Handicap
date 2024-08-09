@@ -51,13 +51,8 @@ public class FonctionnaireService {
         Association association = associationService.getAssociationById(fonctionnaire.getAssociation().getId());
         fonctionnaire.setAssociation(association);
 
-        List<Specialite> specialiteOpt = fonctionnaire.getSpecialite();
-        List<Specialite> specialites = new ArrayList<Specialite>();
-        for(Specialite s : specialiteOpt){
-            Specialite specialite = specialiteService.getSpecialiteById(s.getId());
-            specialites.add(specialite);
-        }
-        fonctionnaire.setSpecialite(specialites);
+        Specialite specialite = specialiteService.getSpecialiteById(fonctionnaire.getSpecialite().getId());
+        fonctionnaire.setSpecialite(specialite);
 
         return fonctionnaireRepo.save(fonctionnaire);
     }
@@ -71,13 +66,8 @@ public class FonctionnaireService {
         Association association = associationService.getAssociationById(fonctionnaire.getAssociation().getId());
         newFonctionnaire.setAssociation(association);
 
-        List<Specialite> specialiteOpt = fonctionnaire.getSpecialite();
-        List<Specialite> specialites = new ArrayList<Specialite>();
-        for(Specialite s : specialiteOpt){
-            Specialite specialite = specialiteService.getSpecialiteById(s.getId());
-            specialites.add(specialite);
-        }
-        newFonctionnaire.setSpecialite(specialites);
+        Specialite specialite = specialiteService.getSpecialiteById(fonctionnaire.getSpecialite().getId());
+        newFonctionnaire.setSpecialite(specialite);
 
         newFonctionnaire.setFullName(fonctionnaire.getFullName());
         newFonctionnaire.setSalaireMensuel(fonctionnaire.getSalaireMensuel());

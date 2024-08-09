@@ -27,9 +27,9 @@ public class Fonctionnaire {
 
     private String fullName;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "specialite_id")
-    private List<Specialite> specialite;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "specialite_id")
+    private Specialite specialite;
 
     private double salaireMensuel;
 
