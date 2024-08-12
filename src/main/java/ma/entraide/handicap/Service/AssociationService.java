@@ -112,6 +112,62 @@ public class AssociationService {
            public int getNbrhandicapMultiple = associationRepo.countBeneficiariesHandicap("الإعاقة المتعددة");
            public int getNbrTroubleApprentissage = associationRepo.countBeneficiariesHandicap("اضطرابات التعلم");
            public int getNbrPeauSeche = associationRepo.countBeneficiariesHandicap("جفاف الجلد المصطبغ");
+            public int getNbrBeneficiairesParSexeF= associationRepo.countBeneficiariesSexe("F");
+
+            public int getNbrBeneficiairesParSexeM= associationRepo.countBeneficiariesSexe("M");
+
+            public int getNbrBeneficiairesParServiceSpecialEducation = associationRepo.countBeneficiariesContaines("التربية الخاصة");
+
+            public int getNbrBeneficiairesParServiceSpeechCorrection = associationRepo.countBeneficiariesContaines("تصحيح النطق");
+
+            public int getNbrBeneficiairesParServiceMotorRehabilitation = associationRepo.countBeneficiariesContaines("الترويض الحركي");
+
+            public int getNbrBeneficiairesParServicePsychomotor = associationRepo.countBeneficiariesContaines("النفسي الحركي");
+
+            public int getNbrBeneficiairesParServiceOccupationalTherapy = associationRepo.countBeneficiariesContaines("العلاج الوظيفي");
+
+            public int getNbrBeneficiairesParServicePsychologicalSupport = associationRepo.countBeneficiariesContaines("الدعم و المواكبة النفسية");
+
+            public int getNbrBeneficiairesParServiceProfessionalRehabilitation = associationRepo.countBeneficiariesContaines("التأهيل المهني");
+
+
+
+
+
+
+
+
+
+            public int getFonctParSpecialiteDirecteur = associationRepo.countFonctParSpecialite("مدير");
+
+            public int getFonctParSpecialiteCoordateurPédagogique = associationRepo.countFonctParSpecialite("المنسق التربوي");
+
+            public int getFonctParSpecialitechauffeur= associationRepo.countFonctParSpecialite("السائق");
+
+
+            public int getFonctParSpecilitetransport= associationRepo.countFonctParSpecialite("مرافقات النقل");
+
+            public int getFonctParSpecialiteEducationSpeciale= associationRepo.countFonctParSpecialite("تربية خاصة");
+
+            public int getFonctParSpecialiteformationprofessionnelle= associationRepo.countFonctParSpecialite("التأهيل المهني");
+
+            public int getFonctParSpecialiteCorrectionprononciation= associationRepo.countFonctParSpecialite("تصحيح النطق");
+
+            public int getFonctParSpecialiteDressagemédical= associationRepo.countFonctParSpecialite("الترويض الطبي");
+
+
+
+            public int getFonctParSpecialitepsychomotrice= associationRepo.countFonctParSpecialite("تخصص نفسي حركي");
+
+            public int getFonctParSpecialiteErgothérapie= associationRepo.countFonctParSpecialite("العلاج الوظيفي المهني");
+
+            public int getFonctParSpecialitesoutienpsychologique= associationRepo.countFonctParSpecialite("تخصص الدعم النفسي");
+
+            public int getFonctParSpecialitemarqueterie= associationRepo.countFonctParSpecialite("أطر المطعمة");
+
+
+
+            public List getBeneParRegion = associationRepo.countBeneficiariesByRegion();
         };
         return data;
     }

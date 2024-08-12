@@ -32,6 +32,19 @@ public interface AssociationRepo extends JpaRepository<Association, Long> {
     @Query("select count(d) from Beneficiaire d where d.typeHandicap.handicap = :handicap")
     public int countBeneficiariesHandicap(@Param("handicap") String handicap);
 
-    @Query("select count(d) from Beneficiaire d where :service member of d.services")
+
+    @Query("select count(d) from Beneficiaire d join d.services s where s.serviceName = :service")
     public int countBeneficiariesContaines(@Param("service") String service);
+
+
+
+    @Query("SELECT r.name AS regionName, COUNT(b.id) AS beneficiaryCount " +
+
+            "FROM Beneficiaire b JOIN b.province p JOIN p.region r " +
+
+            "GROUP BY r.name")
+    List<Object[]> countBeneficiariesByRegion();
+
+    @Query("select count(d) from Fonctionnaire d where d.specialite.specialite = :specialite")
+    public int countFonctParSpecialite(@Param("specialite") String specialite);
 }
