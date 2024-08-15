@@ -281,7 +281,6 @@ public class HandicapApplication {
             userInfoService.addUser(user82);
 
 */
-            UserInfo user1 = new UserInfo(99,"ADMIN","admin@entraide.ma","USER_ROLES","ASH@delegation2024");
 
 
             logger.info("end");
