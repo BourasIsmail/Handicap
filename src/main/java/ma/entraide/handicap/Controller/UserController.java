@@ -2,6 +2,7 @@ package ma.entraide.handicap.Controller;
 
 
 import ma.entraide.handicap.Entity.AuthRequest;
+import ma.entraide.handicap.Entity.RequestBodyObject;
 import ma.entraide.handicap.Entity.UserInfo;
 import ma.entraide.handicap.Service.JwtService;
 import ma.entraide.handicap.Service.UserInfoService;
@@ -109,6 +110,28 @@ public class UserController {
             return new ResponseEntity<>(user, HttpStatus.OK);
         }catch (Exception e){
             throw new UsernameNotFoundException("Invalid email address");
+        }
+    }
+
+    @PutMapping("/changepsw/{userId}")
+
+    public ResponseEntity<String> updatePassword(@PathVariable("userId") Integer userId,
+                                                 @RequestBody RequestBodyObject passwordUpdate) {
+
+        String oldPassword = passwordUpdate.getOldPassword();
+        String newPassword = passwordUpdate.getNewPassword();
+        String confirmPassword = passwordUpdate.getConfirmPassword();
+
+        UserInfo user = userInfoService.getUserById(userId);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        boolean passwordUpdated = userInfoService.updatePassword(user, oldPassword, newPassword, confirmPassword);
+        if (passwordUpdated) {
+            return ResponseEntity.ok("Mot de passe mis à jour avec succès.");
+        } else {
+            return ResponseEntity.badRequest().body("La mise à jour du mot de passe a échoué. Vérifiez vos informations.");
         }
     }
 

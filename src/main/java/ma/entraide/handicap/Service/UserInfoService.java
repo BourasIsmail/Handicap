@@ -118,5 +118,33 @@ public class UserInfoService implements UserDetailsService {
                 return "User updated successfully";
             }
 
+    public boolean updatePassword(UserInfo user, String oldPassword, String newPassword, String confirmPassword) {
+        if (userInfoRepository.findById(user.getId()).isEmpty()) {
+            return false;
+        }
+
+        UserInfo existingUser = userInfoRepository.findById(user.getId()).get();
+
+        // Vérification de l'ancien mot de passe
+        if (!passwordEncoder.matches(oldPassword, existingUser.getPassword())) {
+            return false;
+        }
+
+        // Vérification de la correspondance entre le nouveau mot de passe et sa confirmation
+        if (!newPassword.equals(confirmPassword)) {
+            return false;
+        }
+
+        // Hachage du nouveau mot de passe
+        String newPasswordHash = passwordEncoder.encode(newPassword);
+
+        // Mise à jour du mot de passe dans la base de données
+        existingUser.setPassword(newPasswordHash);
+        userInfoRepository.save(existingUser);
+
+        return true;
+    }
+
+
 
 }
