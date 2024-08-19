@@ -37,7 +37,7 @@ public class BeneficiaireService {
     private ServiceOffertService serviceOffertService;
 
     public List<Beneficiaire> getAllBeneficiaire() {
-        return beneficiaireRepo.findAll();
+        return beneficiaireRepo.getAllBenef();
     }
 
     public List<Beneficiaire> getAllBeneficiaireByProvince(String province) {

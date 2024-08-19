@@ -28,7 +28,7 @@ public class Association {
     private Programme programme;
 
     @OneToMany(cascade = CascadeType.DETACH)
-    //@JoinColumn(name = "etablissement_id")
+    @JoinColumn(name = "etablissement_id")
     private List<Etablissement> etablissements;
 
     //اشتغال وفق السنة (الدراسية/ المالية/أخر)

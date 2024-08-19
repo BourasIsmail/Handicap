@@ -12,6 +12,9 @@ import java.util.List;
 @Repository
 public interface BeneficiaireRepo extends JpaRepository<Beneficiaire, Long> {
 
-    @Query("select d from Beneficiaire d where d.province.name = :province")
+    @Query("select d from Beneficiaire d where d.province.name = :province order by d.association.id")
     public List<Beneficiaire> getBenefByProvince(@Param("province") String province);
+
+    @Query("select d from Beneficiaire d order by d.province.id, d.association.id")
+    public List<Beneficiaire> getAllBenef();
 }
