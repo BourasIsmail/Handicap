@@ -27,7 +27,7 @@ public class FonctionnaireService {
 
 
     public List<Fonctionnaire> getAllFonctionnaire() {
-        return fonctionnaireRepo.findAll();
+        return fonctionnaireRepo.getAllFonctionnaire();
     }
 
     public List<Fonctionnaire> getAllFonctionnaireByProvince(String province) {
