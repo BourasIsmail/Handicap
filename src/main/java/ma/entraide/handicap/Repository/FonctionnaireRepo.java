@@ -15,6 +15,6 @@ public interface FonctionnaireRepo extends JpaRepository<Fonctionnaire, Long> {
     @Query("select d from Fonctionnaire d where d.province.name = :province order by d.association.name")
     public List<Fonctionnaire> getFoncByProvince(@Param("province") String province);
 
-    @Query("select d from Fonctionnaire d order by d.province.region.name, d.association.name")
+    @Query("select d from Fonctionnaire d order by d.province.region.name,d.province.name, d.association.name")
     public List<Fonctionnaire> getAllFonctionnaire();
 }
