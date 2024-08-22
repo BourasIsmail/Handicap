@@ -169,7 +169,7 @@ public class AssociationService {
 
             public List getBeneParRegion = associationRepo.countBeneficiariesByRegion();
 
-            public List getBeneParDeleEtAsso = associationRepo.countBeneficiariesByProvinceAndAssociation();
+            public List getBeneParDeleEtAsso = associationRepo.countBeneficiariesByProvinceAssociationAndProgramme();
 
             public List getFoncParDeleEtAsso = associationRepo.countFonctionnaireByProvinceAndAssociation();
         };
