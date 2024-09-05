@@ -23,6 +23,8 @@ public class LogsConnexion {
 
     private String accountEmail;
 
+    private String device;
+
     @ManyToOne
     @JoinColumn(name = "user")
     private UserInfo user;

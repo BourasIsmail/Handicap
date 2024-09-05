@@ -28,7 +28,7 @@ public class LogsConnexionService {
         return clientIp;
     }
 
-    public LogsConnexion addLogsConnexion(UserInfo user , String ip) {
+    public LogsConnexion addLogsConnexion(UserInfo user , String ip, String detail) {
         LogsConnexion logsConnexion = new LogsConnexion();
 
         UserInfo userInfo = userInfoService.getUserById(user.getId());
@@ -41,6 +41,7 @@ public class LogsConnexionService {
 
         logsConnexion.setIpAdresse(ip);
 
+        logsConnexion.setDevice(detail);
 
         return logsConnexionRepo.save(logsConnexion);
     }

@@ -8,6 +8,7 @@ import ma.entraide.handicap.Service.JwtService;
 import ma.entraide.handicap.Service.LogsConnexionService;
 import ma.entraide.handicap.Service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,13 +50,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestHeader(value = "X-Forwarded-For", defaultValue = "unknown")String ip ,@RequestBody AuthRequest authRequest){
+    public ResponseEntity<?> login(@RequestHeader(value = "X-Forwarded-For", defaultValue = "unknown")String ip
+            ,@RequestBody AuthRequest authRequest
+    , @RequestHeader(value = "user-agent", defaultValue = "notFound") String device){
         try {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
             if(authenticate.isAuthenticated()){
                 UserInfo userInfo = userInfoService.findUserByUsername(authRequest.getEmail());
-                logsConnexionService.addLogsConnexion(userInfo, ip);
-                System.out.println(ip);
+                logsConnexionService.addLogsConnexion(userInfo, ip, device);
+                System.out.println(device);
                 return ResponseEntity.ok(jwtService.generateToken(authRequest.getEmail()));
             }else {
                 throw new UsernameNotFoundException("Invalid user request");
