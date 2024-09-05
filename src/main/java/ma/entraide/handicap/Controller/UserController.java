@@ -5,6 +5,7 @@ import ma.entraide.handicap.Entity.AuthRequest;
 import ma.entraide.handicap.Entity.RequestBodyObject;
 import ma.entraide.handicap.Entity.UserInfo;
 import ma.entraide.handicap.Service.JwtService;
+import ma.entraide.handicap.Service.LogsConnexionService;
 import ma.entraide.handicap.Service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,8 @@ public class UserController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private LogsConnexionService logsConnexionService;
 
     @GetMapping("/welcome")
     public String welcome(){
@@ -46,10 +49,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest){
+    public ResponseEntity<?> login(@RequestHeader(value = "X-Forwarded-For", defaultValue = "unknown")String ip ,@RequestBody AuthRequest authRequest){
         try {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
             if(authenticate.isAuthenticated()){
+                UserInfo userInfo = userInfoService.findUserByUsername(authRequest.getEmail());
+                logsConnexionService.addLogsConnexion(userInfo);
+                System.out.println(ip);
                 return ResponseEntity.ok(jwtService.generateToken(authRequest.getEmail()));
             }else {
                 throw new UsernameNotFoundException("Invalid user request");
