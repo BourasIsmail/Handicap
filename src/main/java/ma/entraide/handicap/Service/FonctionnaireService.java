@@ -7,6 +7,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +55,8 @@ public class FonctionnaireService {
         Specialite specialite = specialiteService.getSpecialiteById(fonctionnaire.getSpecialite().getId());
         fonctionnaire.setSpecialite(specialite);
 
+        fonctionnaire.setDateCreation(new Date());
+
         return fonctionnaireRepo.save(fonctionnaire);
     }
 
@@ -75,6 +78,8 @@ public class FonctionnaireService {
         newFonctionnaire.setCnss(fonctionnaire.getCnss());
         newFonctionnaire.setFraisCnss(fonctionnaire.getFraisCnss());
         newFonctionnaire.setMontantAnnuel(fonctionnaire.getMontantAnnuel());
+
+        newFonctionnaire.setDateModification(new Date());
 
         return fonctionnaireRepo.save(newFonctionnaire);
     }
