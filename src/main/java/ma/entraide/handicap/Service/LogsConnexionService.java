@@ -28,7 +28,7 @@ public class LogsConnexionService {
         return clientIp;
     }
 
-    public LogsConnexion addLogsConnexion(UserInfo user) {
+    public LogsConnexion addLogsConnexion(UserInfo user , String ip) {
         LogsConnexion logsConnexion = new LogsConnexion();
 
         UserInfo userInfo = userInfoService.getUserById(user.getId());
@@ -39,7 +39,7 @@ public class LogsConnexionService {
 
         logsConnexion.setDateLogin(new Date());
 
-        logsConnexion.setIpAdresse(getClientIp());
+        logsConnexion.setIpAdresse(ip);
 
 
         return logsConnexionRepo.save(logsConnexion);

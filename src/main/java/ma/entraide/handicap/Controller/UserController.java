@@ -54,7 +54,7 @@ public class UserController {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
             if(authenticate.isAuthenticated()){
                 UserInfo userInfo = userInfoService.findUserByUsername(authRequest.getEmail());
-                logsConnexionService.addLogsConnexion(userInfo);
+                logsConnexionService.addLogsConnexion(userInfo, ip);
                 System.out.println(ip);
                 return ResponseEntity.ok(jwtService.generateToken(authRequest.getEmail()));
             }else {
