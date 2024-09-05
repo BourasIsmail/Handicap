@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -58,6 +59,8 @@ public class Beneficiaire {
     private List<ServiceOffert> services;
 
 
+    private Date dateCreation;
 
+    private Date dateModification;
 
 }

@@ -9,6 +9,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,6 +79,8 @@ public class BeneficiaireService {
         }
         beneficiaire.setServices(servicesOfferts);
 
+        beneficiaire.setDateCreation(new Date());
+
         return beneficiaireRepo.save(beneficiaire);
     }
 
@@ -111,6 +114,7 @@ public class BeneficiaireService {
         beneficiaire.setAge(newBeneficiaire.getAge());
         beneficiaire.setSexe(newBeneficiaire.getSexe());
         beneficiaire.setDegreHandicap(newBeneficiaire.getDegreHandicap());
+        beneficiaire.setDateModification(new Date());
 
         return beneficiaireRepo.save(beneficiaire);
     }

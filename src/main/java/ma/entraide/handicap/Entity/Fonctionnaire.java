@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -44,5 +45,8 @@ public class Fonctionnaire {
 
     private double montantAnnuel;
 
+    private Date dateCreation;
+
+    private Date dateModification;
 
 }

@@ -1,5 +1,6 @@
 package ma.entraide.handicap.Service;
 
+import jakarta.transaction.Transactional;
 import ma.entraide.handicap.Entity.*;
 import ma.entraide.handicap.Repository.AssociationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,28 +61,76 @@ public class AssociationService {
         return associationRepo.save(association);
     }
 
+    @Transactional
+
     public String updateAssociation(Long id, Association association) {
+
         Association newAssociation = getAssociationById(id);
+
         Province province =provinceService.getProvinceById(association.getDeleguation().getId());
+
         newAssociation.setDeleguation(province);
+
         Programme programme = programmeService.getProgrammeById(association.getProgramme().getId());
+
         newAssociation.setProgramme(programme);
+
         //etablissement
-        List<Etablissement> etablissementsOpt = association.getEtablissements();
-        List<Etablissement> etablissements = new ArrayList<Etablissement>();
-        for(Etablissement etablissement : etablissementsOpt) {
+
+        /*List<Etablissement> etablissements = new ArrayList<>();
+
+        for (Etablissement etablissement : association.getEtablissements()) {
+
             Etablissement etablissement1 = etablissementService.getEtablissementById(etablissement.getId());
+
             etablissements.add(etablissement1);
+
+
+
         }
-        newAssociation.setEtablissements(etablissements);
+
+        newAssociation.setEtablissements(etablissements);*/
+
+
+
+
+
+        for (Etablissement updatedEtablissement : association.getEtablissements()) {
+
+            for (Etablissement existingEtablissement : newAssociation.getEtablissements()) {
+
+                if (existingEtablissement.getId().equals(updatedEtablissement.getId())) {
+
+                    existingEtablissement.setName(updatedEtablissement.getName());
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+
+
+        associationRepo.save(newAssociation);
+
         newAssociation.setEmail(association.getEmail());
+
         newAssociation.setName(association.getName());
+
         newAssociation.setFullName(association.getFullName());
+
         newAssociation.setAdresse(association.getAdresse());
+
         newAssociation.setEmploiSelonAnnee(association.getEmploiSelonAnnee());
+
         newAssociation.setTelephone(association.getTelephone());
-         associationRepo.save(newAssociation);
-         return "association mis a jour";
+
+        associationRepo.save(newAssociation);
+
+        return "association mis a jour";
+
     }
 
     public String deleteAssociation(Long id) {
