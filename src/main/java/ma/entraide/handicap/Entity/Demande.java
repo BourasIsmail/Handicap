@@ -47,4 +47,10 @@ public class Demande {
     private byte[] pdfFile;
 
     private String pdfFileName;
+
+    @Lob
+    @Column(columnDefinition = "longblob")
+    private byte[] qrCode;
+
+    private String qrCodeFileName;
 }

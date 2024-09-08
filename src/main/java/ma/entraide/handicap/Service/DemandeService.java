@@ -1,5 +1,9 @@
 package ma.entraide.handicap.Service;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.oned.EAN13Writer;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.PdfWriter;
@@ -12,9 +16,13 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
+
+import static ma.entraide.handicap.Service.QRCodeGenerator.generateQRCodeImage;
+import static ma.entraide.handicap.Service.QRCodeGenerator.getQRCodeImage;
 
 @Service
 public class DemandeService {
@@ -33,8 +41,7 @@ public class DemandeService {
     public Demande addDemande(Demande demande) {
         Province province = provinceService.getProvinceById(demande.getProvince().getId());
         Association association = associationService.getAssociationById(demande.getAssociation().getId());
-        System.out.println(province);
-        System.out.println(association);
+
         demande.setProvince(province);
         demande.setAssociation(association);
         demande.setDateDemande(new Date());
@@ -42,6 +49,20 @@ public class DemandeService {
         // Generate PDF
         byte[] pdfContent = generatePdf(demande);
         demande.setPdfFile(pdfContent);
+        // Generate QR code
+
+        String content = demande.getAssociation().getName()+
+                "-"+demande.getProvince().getName()+"-"+demande.getDateDemande().toString()+
+                "- A :"+demande.getNbrProgA()+"- B : "+demande.getNbrProgB()+"- C : "
+                +demande.getNbrProgC()+ "-"+demande.getTotalNbrProg()+"-"+demande.getSujetDemande()+
+                "-"+demande.getNomComplet()+"-"+demande.getTelephone()+"-"+demande.getEmail();
+
+        try {
+            demande.setQrCode(generateQRCodeImage(content));
+            demande.setQrCodeFileName("QRCode-"+demande.getAssociation().getName()+".png");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return demandeRepo.save(demande);
     }
@@ -66,6 +87,13 @@ public class DemandeService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static BufferedImage generateQr(String content) throws Exception {
+        EAN13Writer barcodeWriter = new EAN13Writer();
+        BitMatrix bitMatrix = barcodeWriter.encode(content, BarcodeFormat.EAN_13, 300, 150);
+
+        return MatrixToImageWriter.toBufferedImage(bitMatrix);
     }
 
     public Demande getDemandeById(Long id) {
