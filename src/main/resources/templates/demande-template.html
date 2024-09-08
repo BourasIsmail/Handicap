@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Demande PDF</title>
-    <style>
-        /* Add your styles here */
-    </style>
+    <meta charset="UTF-8" />
 </head>
-<body>
-<h1>Demande Details</h1>
+<body dir="rtl">
+<header>
+    <table>
+        <tr>
+            <td>
+                <img src = "/assets/logo.png" alt="logo" width="100" height="100" />
+            </td>
+            <td>
+                <h1>طلب تسجيل</h1>
+            </td>
+        </tr>
+    </table>
+</header>
 <p><strong>Nom Complet:</strong> [[${demande.nomComplet}]]</p>
 <p><strong>Téléphone:</strong> [[${demande.telephone}]]</p>
 <p><strong>Email:</strong> [[${demande.email}]]</p>
-<p><strong>Association:</strong> [[${demande.association.nom}]]</p>
-<p><strong>Province:</strong> [[${demande.province.nom}]]</p>
-<!-- Add other details as needed -->
+<p><strong>Association:</strong> [[${demande.association.name}]]</p>
+<p><strong>Province:</strong> [[${demande.province.name}]]</p>
+
 </body>
 </html>

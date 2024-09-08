@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Demande {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(cascade = CascadeType.DETACH)
@@ -32,6 +32,8 @@ public class Demande {
 
     private long nbrProgC;
 
+    private long totalNbrProg;
+
     private String sujetDemande;
 
     private Date dateDemande;
@@ -43,4 +45,6 @@ public class Demande {
     @Lob
     @Column(columnDefinition = "longblob")
     private byte[] pdfFile;
+
+    private String pdfFileName;
 }

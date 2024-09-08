@@ -14,6 +14,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 @Service
 public class DemandeService {
@@ -32,9 +33,12 @@ public class DemandeService {
     public Demande addDemande(Demande demande) {
         Province province = provinceService.getProvinceById(demande.getProvince().getId());
         Association association = associationService.getAssociationById(demande.getAssociation().getId());
+        System.out.println(province);
+        System.out.println(association);
         demande.setProvince(province);
         demande.setAssociation(association);
-
+        demande.setDateDemande(new Date());
+        demande.setTotalNbrProg(demande.getNbrProgA() + demande.getNbrProgB() + demande.getNbrProgC());
         // Generate PDF
         byte[] pdfContent = generatePdf(demande);
         demande.setPdfFile(pdfContent);
@@ -62,5 +66,9 @@ public class DemandeService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Demande getDemandeById(Long id) {
+        return demandeRepo.findById(id).orElse(null);
     }
 }
